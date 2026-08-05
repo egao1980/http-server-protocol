@@ -33,8 +33,7 @@
  (lambda ()
    (asdf:load-system "http-server-backend-woo")
    (asdf:load-system "usocket")
-   (asdf:load-system "rove")
-   (http-server-backend-woo:use-woo-backend)
+   (uiop:symbol-call :http-server-backend-woo :use-woo-backend)
    (let* ((port
            (let* ((sock (usocket:socket-listen "127.0.0.1" 0 :reuseaddress t))
                   (p (usocket:get-local-port sock)))
@@ -43,12 +42,13 @@
           (app (lambda (env)
                  (declare (ignore env))
                  '(200 (:content-type "text/plain") ("woo-ok"))))
-          (server (http-server-protocol:serve app :host "127.0.0.1" :port port
-                                              :background t)))
+          (server (uiop:symbol-call :http-server-protocol :serve
+                                    app :host "127.0.0.1" :port port
+                                    :background t)))
      (unwind-protect
           (progn
             (sleep 0.25)
-            (unless (http-server-protocol:running-p server)
+            (unless (uiop:symbol-call :http-server-protocol :running-p server)
               (error "woo server not running"))
             (let* ((sock (usocket:socket-connect "127.0.0.1" port
                                                  :element-type 'character
@@ -70,6 +70,6 @@
               (unless (and (search "200" body) (search "woo-ok" body))
                 (error "woo GET failed: ~a" body))
               (format t "~&; ci: woo smoke ok~%")))
-       (ignore-errors (http-server-protocol:stop server))))))
+       (ignore-errors (uiop:symbol-call :http-server-protocol :stop server))))))
 
 (uiop:quit 0)
