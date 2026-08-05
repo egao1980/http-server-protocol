@@ -19,8 +19,11 @@
   (or (uiop:getenv name) default))
 
 (let* ((system-name (env "PKG_SYSTEM" "http-server-protocol"))
-       (version (or (env "PKG_VERSION")
-                    (asdf:component-version (asdf:find-system system-name))))
+       ;; workflow_dispatch default "" is truthy — treat blank as missing
+       (version (let ((v (env "PKG_VERSION")))
+                  (if (and v (plusp (length v)))
+                      v
+                      (asdf:component-version (asdf:find-system system-name)))))
        (registry-url (env "OCI_REGISTRY" "ghcr.io"))
        (namespace (string-downcase (env "OCI_NAMESPACE" "egao1980/cl-systems")))
        (auth (cl-oci-client/auth:make-auth-config
@@ -31,6 +34,8 @@
              (format nil "https://~a" registry-url) :auth auth))
        (spec (cl-repository-packager/asdf-plugin:auto-package-spec system-name))
        (result nil))
+  (unless (and version (plusp (length version)))
+    (error "PKG_VERSION empty and .asd :version missing for ~a" system-name))
   (setf (cl-repository-packager/build-matrix:package-spec-provides spec)
         (list system-name))
   (setf (cl-repository-packager/build-matrix:package-spec-version spec) version)
