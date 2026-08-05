@@ -26,9 +26,13 @@
  (lambda ()
    (cl-repo:ensure-system-dependencies "http-server-backend-woo"
      :with '("http-server-protocol" "rove" "usocket")
-     :sources '(("rove" :ql)
+     ;; Prefer QL for babel: GHCR babel:latest uses 0 fillers vs QL NIL →
+     ;; sb-ext:defconstant-uneql when client bootstrap already loaded QL babel.
+     :sources '(("babel" :ql)
+                ("rove" :ql)
                 ("alexandria" :ql)
                 ("bordeaux-threads" :ql)
+                ("cffi" :ql)
                 ("cl-ppcre" :ql)
                 ("flexi-streams" :ql)
                 ("split-sequence" :ql)
