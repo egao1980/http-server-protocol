@@ -1,4 +1,4 @@
-;;;; Phase 1: install SUT dependency closure via cl-repository-client.
+;;;; Install Woo backend deps (Unix / libev CI job).
 
 (setf *debugger-hook*
       (lambda (c h)
@@ -24,19 +24,19 @@
 
 (call-with-ci-muffles
  (lambda ()
-   ;; Primary system is findable via http-server-protocol.asd; backends have
-   ;; their own .asd files (ASDF secondary-system discovery needs that).
-   (cl-repo:ensure-system-dependencies "http-server-protocol"
-     :also-tests t
-     :with '("http-server-backend-hunchentoot" "rove" "usocket")
-     :sources '(("rove" :ql)
+   (cl-repo:ensure-system-dependencies "http-server-backend-woo"
+     :with '("http-server-protocol" "rove" "usocket")
+     ;; Prefer QL for babel: GHCR babel:latest uses 0 fillers vs QL NIL →
+     ;; sb-ext:defconstant-uneql when client bootstrap already loaded QL babel.
+     :sources '(("babel" :ql)
+                ("rove" :ql)
                 ("alexandria" :ql)
                 ("bordeaux-threads" :ql)
+                ("cffi" :ql)
                 ("cl-ppcre" :ql)
                 ("flexi-streams" :ql)
                 ("split-sequence" :ql)
-                ("cl-base64" :ql)
                 ("trivial-features" :ql)))))
 
-(format t "~&; ci: install phase done~%")
+(format t "~&; ci: woo install phase done~%")
 (uiop:quit 0)
