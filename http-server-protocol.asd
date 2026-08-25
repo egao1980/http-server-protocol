@@ -4,6 +4,13 @@
   :author "egao1980"
   :license "MIT"
   :depends-on ("bordeaux-threads")
+  :properties
+  (:cl-repo
+   (:ci (:with ("http-server-backend-hunchentoot" "rove" "usocket")
+         :sources (("rove" :ql) ("alexandria" :ql) ("bordeaux-threads" :ql)
+                   ("cl-ppcre" :ql) ("flexi-streams" :ql) ("split-sequence" :ql)
+                   ("cl-base64" :ql) ("trivial-features" :ql))
+         :load-before-test ("http-server-backend-hunchentoot"))))
   :serial t
   :pathname "src"
   :components ((:file "package")

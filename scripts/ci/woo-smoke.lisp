@@ -1,4 +1,4 @@
-;;;; Woo smoke (Ubuntu + libev).
+;;;; Woo smoke (Ubuntu + libev). Not a canned hook — invoked from test-woo.
 
 (setf asdf:*compile-file-failure-behaviour* :warn)
 
