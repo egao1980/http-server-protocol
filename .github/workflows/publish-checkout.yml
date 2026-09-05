@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        system: [http-server-protocol, http-server-backend-hunchentoot, http-server-backend-woo]
+        system: [http-server-protocol, http-server-backend-hunchentoot, http-server-backend-woo, http-server-backend-http2]
     uses: egao1980/cl-repository/.github/workflows/publish-source.yml@main
     with:
       system: ${{ matrix.system }}

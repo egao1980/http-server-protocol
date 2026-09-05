@@ -1,6 +1,6 @@
 (defsystem "http-server-backend-http2"
-  :version "0.1.0"
-  :description "HTTP/2 Clack backend for http-server-protocol (zellerin http2)"
+  :version "0.2.0"
+  :description "HTTP/2 Clack backend (RFC 8441 Extended CONNECT) for http-server-protocol"
   :author "egao1980"
   :license "MIT"
   :depends-on ("http-server-protocol")

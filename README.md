@@ -7,7 +7,7 @@ CLOS HTTP **server** lifecycle for [cl-stack](https://github.com/egao1980/cl-sta
 | `http-server-protocol` | `serve` / `start` / `stop` / `with-server` |
 | `http-server-backend-hunchentoot` | **Default** — Windows + Unix |
 | `http-server-backend-woo` | Unix / libev (call `use-woo-backend`) |
-| `http-server-backend-http2` | HTTP/2 + TLS via zellerin `http2` (this repo; requires `:ssl-cert` / `:ssl-key`) |
+| `http-server-backend-http2` | HTTP/2 + TLS via zellerin `http2` (this repo; requires `:ssl-cert` / `:ssl-key`). **0.2.0** advertises `SETTINGS_ENABLE_CONNECT_PROTOCOL` and dispatches RFC 8441 Extended CONNECT on `END_HEADERS` (stream stays open after 200). |
 
 Brief: [`cl-stack/docs/capabilities/http-server.md`](https://github.com/egao1980/cl-stack/blob/main/docs/capabilities/http-server.md).
 
