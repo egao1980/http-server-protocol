@@ -18,6 +18,11 @@ jobs:
     with:
       system: http-server-protocol
 
+  test-http2:
+    uses: egao1980/cl-repository/.github/workflows/test-system.yml@main
+    with:
+      system: http-server-backend-http2
+
   test-woo:
     name: Woo smoke (Ubuntu + libev)
     runs-on: ubuntu-latest
