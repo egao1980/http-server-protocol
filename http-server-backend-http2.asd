@@ -4,6 +4,7 @@
   :author "egao1980"
   :license "MIT"
   :depends-on ("http-server-protocol")
+  :properties (:cl-repo (:ci (:with ("http2"))))
   :serial t
   :pathname "src"
   :components ((:file "http2-package")
